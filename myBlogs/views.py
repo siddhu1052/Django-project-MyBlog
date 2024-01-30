@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate , login ,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.core.paginator import Paginator
 # Create your views here.
 def home(request):
     # return HttpResponse('<h1>this is the home page</h1>')
@@ -66,7 +67,10 @@ def ck(request):
 
 def all_Blogs(request):
     y=blog_post.objects.all();
-    return render(request,'myBlogs/all_Blogs.html',{"y":y})
+    p = Paginator(y, 2)
+    page_number = request.GET.get("page")
+    page_obj = p.get_page(page_number)
+    return render(request,'myBlogs/all_Blogs.html',{"y":page_obj})
 
 def cat_Blogs(request, catagory):
     a = blog_post.objects.filter(Blog_cat__blog_cat = catagory)
@@ -127,6 +131,8 @@ def find_blog(request):
         x=request.POST.get('blog_search')
         print(x)
         mydata = blog_category.objects.filter(Q(blog_cat__icontains=x))
+        mydata2 = blog_post.objects.filter(blog_name__icontains=x)
         print(mydata)                              
-        return render(request, 'myBlogs/home.html',{"category":mydata})
+        # return render(request, 'myBlogs/home.html',{"category":mydata})
+        return render(request,'myBlogs/all_Blogs.html',{"y":mydata2})
 
