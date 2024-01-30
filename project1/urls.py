@@ -34,7 +34,8 @@ urlpatterns = [
     path('login_user',views.login_user,name='login_user'),
     path('signup_user',views.signup_user,name='signup_user'),
     path('logout_user',views.logout_user,name='logout_user'),
-    
+    path('find_blog',views.find_blog,name='find_blog'),
+    path('cat_blogs/<str:catagory>/',views.cat_Blogs,name ='cat_Blogs'),
 ]
 
 if settings.DEBUG:

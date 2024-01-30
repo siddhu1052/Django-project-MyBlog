@@ -16,7 +16,7 @@
             <ul class="navbar-nav">
               <style>
                 .navbar-nav{
-                   margin-right: 40vw;
+                   margin-right: 35vw;
                 }
               </style>
               <li class="nav-item">
@@ -39,6 +39,12 @@
                 </ul>
               </li>
             </ul>
+            
+            <form class="d-flex px-2" role="search" method="post" action="{% url 'find_blog' %}">
+              {%csrf_token%}
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='blog_search'>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
 
               {%if user.is_authenticated%}
               <p class="px-2 mt-2">Welcome <b>{{user.username}}</b></p>

@@ -13,6 +13,7 @@
 
     
       <div class="d-flex flex-wrap justify-content-evenly">
+        
         {% for y in y %}
         <div
           class="card mb-2"
@@ -31,6 +32,7 @@
             <a href="{% url 'Blog_details' y.id %}" class="btn btn-primary">Read More</a>
           </div>
         </div>
+        {% comment %} {% endif %} {% endcomment %}
         {% endfor %}
       </div>
       

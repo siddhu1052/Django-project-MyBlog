@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate , login ,logout 
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 # Create your views here.
 def home(request):
     # return HttpResponse('<h1>this is the home page</h1>')
@@ -67,6 +67,12 @@ def ck(request):
 def all_Blogs(request):
     y=blog_post.objects.all();
     return render(request,'myBlogs/all_Blogs.html',{"y":y})
+
+def cat_Blogs(request, catagory):
+    a = blog_post.objects.filter(Blog_cat__blog_cat = catagory)
+    # a = blog_post.objects.filter(Foreign_key__local_key = catagory)
+    return render(request,'myBlogs/all_Blogs.html',{"y":a})
+
     
 # def Blog_details(request,blog_id):
 #     return render(request,'myBlogs/Blog_details.html'),
@@ -116,4 +122,11 @@ def logout_user(request):
         logout(request)
         return redirect('home');
     
-    
+def find_blog(request):
+    if(request.method=='POST'):
+        x=request.POST.get('blog_search')
+        print(x)
+        mydata = blog_category.objects.filter(Q(blog_cat__icontains=x))
+        print(mydata)                              
+        return render(request, 'myBlogs/home.html',{"category":mydata})
+

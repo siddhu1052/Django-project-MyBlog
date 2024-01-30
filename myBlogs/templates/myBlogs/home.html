@@ -121,7 +121,7 @@
             <p class="card-text">{{ y.blogcat_description }}</p>
           </div>
           <div class="card-footer">
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a href="{% url 'cat_Blogs' y.blog_cat %}" class="btn btn-primary">Go somewhere</a>
           </div>
         </div>
         {% endfor %}
