@@ -26,8 +26,9 @@ class blog_post(models.Model):
     blog_name =models.CharField(max_length=100)
     cover_img=models.ImageField(upload_to='images/')
     blog_description=RichTextField()
-    
+    like_count=models.IntegerField(default=0,null=True)
+    views_count=models.IntegerField(default=0,null=True)
     Blog_cat=models.ForeignKey(blog_category,null=True, default=None, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return self.blog_name

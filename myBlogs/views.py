@@ -67,7 +67,7 @@ def ck(request):
 
 def all_Blogs(request):
     y=blog_post.objects.all();
-    p = Paginator(y, 2)
+    p = Paginator(y, 6)
     page_number = request.GET.get("page")
     page_obj = p.get_page(page_number)
     return render(request,'myBlogs/all_Blogs.html',{"y":page_obj})
@@ -83,6 +83,8 @@ def cat_Blogs(request, catagory):
 
 def Blog_details(request, blog_id):
     obj = get_object_or_404(blog_post, pk=blog_id)
+    obj.views_count+=1;
+    obj.save();
     print(obj)
     print(blog_id)
     return render(request,'myblogs/blog_details.html', {"obj":obj})
@@ -136,3 +138,8 @@ def find_blog(request):
         # return render(request, 'myBlogs/home.html',{"category":mydata})
         return render(request,'myBlogs/all_Blogs.html',{"y":mydata2})
 
+def add_likes(request,blog_id):
+    obj = get_object_or_404(blog_post, pk=blog_id);
+    obj.like_count += 1;
+    obj.save();
+    return redirect('home');

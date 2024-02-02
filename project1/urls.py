@@ -36,6 +36,7 @@ urlpatterns = [
     path('logout_user',views.logout_user,name='logout_user'),
     path('find_blog',views.find_blog,name='find_blog'),
     path('cat_blogs/<str:catagory>/',views.cat_Blogs,name ='cat_Blogs'),
+    path('add_likes/<str:blog_id>',views.add_likes,name='add_likes'),
 ]
 
 if settings.DEBUG:
