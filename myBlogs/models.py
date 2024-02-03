@@ -29,6 +29,12 @@ class blog_post(models.Model):
     like_count=models.IntegerField(default=0,null=True)
     views_count=models.IntegerField(default=0,null=True)
     Blog_cat=models.ForeignKey(blog_category,null=True, default=None, on_delete=models.CASCADE)
-
     def __str__(self):
+        return self.blog_name
+    
+class comment(models.Model):
+    u_mail=models.EmailField(max_length=100, null=True, blank=False)
+    comment=models.TextField(max_length=400,null=True,blank=False)
+    Blog_name=models.ForeignKey(blog_post, null=True, default=True, on_delete=models.CASCADE)
+    def __str_(self):
         return self.blog_name

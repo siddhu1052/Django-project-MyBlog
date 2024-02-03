@@ -37,6 +37,8 @@ urlpatterns = [
     path('find_blog',views.find_blog,name='find_blog'),
     path('cat_blogs/<str:catagory>/',views.cat_Blogs,name ='cat_Blogs'),
     path('add_likes/<str:blog_id>',views.add_likes,name='add_likes'),
+    path('comments/<str:blog_name>/',views.comments,name='comments'),
+    path('add_comments',views.add_comments,name='add_comments'),
 ]
 
 if settings.DEBUG:

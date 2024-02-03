@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import blog_category, contact_info, subscription_details, blog_post
-from .forms import Blog_Form, BlogPost_Form
+from .models import blog_category, contact_info, subscription_details, blog_post, comment
+from .forms import Blog_Form, BlogPost_Form, add_comments_Form
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -85,8 +85,7 @@ def Blog_details(request, blog_id):
     obj = get_object_or_404(blog_post, pk=blog_id)
     obj.views_count+=1;
     obj.save();
-    print(obj)
-    print(blog_id)
+    
     return render(request,'myblogs/blog_details.html', {"obj":obj})
     # return HttpResponse('blog_details')
     
@@ -143,3 +142,31 @@ def add_likes(request,blog_id):
     obj.like_count += 1;
     obj.save();
     return redirect('home');
+
+def comments(request, blog_name):
+    Blog_id=request.GET.get('blog_id');
+    obj = get_object_or_404(blog_post, pk=Blog_id)
+    print(blog_name)
+    comms = comment.objects.filter(Blog_name__blog_name = blog_name)
+    link="blog_description/"+Blog_id+"/"
+    tot=comms.count()
+    
+    form = add_comments_Form()
+    if request.method=='GET':
+        return render(request,'myBlogs/Blog_details.html',{'obj':obj, 'comms': comms, 'total':tot , 'form':form})
+    else :
+        data=add_comments_Form(request.POST,request.FILES)
+        if data.is_valid():
+            data.save()
+    
+    return render(request,'myBlogs/Blog_details.html',{'obj':obj, 'comms': comms, 'total':tot , 'form':form})
+
+def add_comments(request):
+    form = add_comments_Form()
+    if request.method=='GET':
+        return render(request,'myBlogs/add_comments.html',{'form':form})
+    else :
+        data=add_comments_Form(request.POST,request.FILES)
+        if data.is_valid():
+            data.save()
+            return render(request,'myBlogs/add_comments.html',{'form':form})
