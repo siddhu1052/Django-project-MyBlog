@@ -35,6 +35,6 @@ class blog_post(models.Model):
 class comment(models.Model):
     u_mail=models.EmailField(max_length=100, null=True, blank=False)
     comment=models.TextField(max_length=400,null=True,blank=False)
-    Blog_name=models.ForeignKey(blog_post, null=True, default=True, on_delete=models.CASCADE)
+    Blog_name=models.ForeignKey(blog_post, null=True, default=None, on_delete=models.CASCADE)
     def __str_(self):
-        return self.blog_name
+        return self.u_mail

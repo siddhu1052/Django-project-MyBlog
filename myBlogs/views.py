@@ -82,6 +82,7 @@ def cat_Blogs(request, catagory):
 #     return render(request,'myBlogs/Blog_details.html'),
 
 def Blog_details(request, blog_id):
+    
     obj = get_object_or_404(blog_post, pk=blog_id)
     obj.views_count+=1;
     obj.save();
@@ -151,13 +152,21 @@ def comments(request, blog_name):
     link="blog_description/"+Blog_id+"/"
     tot=comms.count()
     
+    # object_c=comment
+    
+    
     form = add_comments_Form()
     if request.method=='GET':
         return render(request,'myBlogs/Blog_details.html',{'obj':obj, 'comms': comms, 'total':tot , 'form':form})
     else :
-        data=add_comments_Form(request.POST,request.FILES)
-        if data.is_valid():
-            data.save()
+        b=request.POST.get('data')
+        print (b)
+        a=request.user.email
+        print(a)
+        c=blog_name
+        c_obj=comment(u_mail=a,comment=b,Blog_name=obj)
+        c_obj.save()
+        return render(request,'myBlogs/Blog_details.html',{'obj':obj, 'comms': comms, 'total':tot , 'form':form})
     
     return render(request,'myBlogs/Blog_details.html',{'obj':obj, 'comms': comms, 'total':tot , 'form':form})
 
