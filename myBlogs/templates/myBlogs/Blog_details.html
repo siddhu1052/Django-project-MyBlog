@@ -12,7 +12,7 @@
     />
   </head>
   <body>
-    {%include 'myBlogs/navbar.html'%}
+    {% comment %} {%include 'myBlogs/navbar.html'%} {% endcomment %}
     <div class="container mt-2">
       <h2 class="text-center">{{ obj.blog_name }}</h2>
       <div
@@ -70,9 +70,9 @@
 
     <div class="comments">
       <h1>Comments</h1>
-       <a href="{% url 'comments' obj.blog_name %}?blog_id={{obj.id}}"
+      <a href="{% url 'comments' obj.blog_name %}?blog_id={{obj.id}}"
         >read comments</a
-      > 
+      >
 
       <div class="comm">
         {% if comms %} {% for x in comms %}
@@ -85,7 +85,8 @@
 
       <div class="add_comment">
         <form method="post" action="">
-          {% csrf_token %} <input type="text" placeholder="Add comment" id="data" name="data" />
+          {% csrf_token %}
+          <input type="text" placeholder="Add comment" id="data" name="data" />
           <button type="submit">submit</button>
         </form>
       </div>
